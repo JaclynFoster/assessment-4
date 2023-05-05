@@ -22,54 +22,54 @@ const getFortune = () => {
 
 fortuneBtn.addEventListener('click', getFortune)
 
-// Career Section
+// Goals Section
 
-const careerForm = document.querySelector('#form-container')
-const careerInput = document.querySelector('#career-input')
-const careerBtn = document.querySelector('#career-btn')
-const careerListHolder = document.querySelector('#career-holder')
+const goalForm = document.querySelector('#form-container')
+const goalInput = document.querySelector('#goal-input')
+const goalBtn = document.querySelector('#goal-btn')
+const goalListHolder = document.querySelector('#goal-holder')
 
-const showCareerList = jobName => {
-  let addNewCareer = document.createElement('li')
+const showGoalsList = goalName => {
+  let addNewGoal = document.createElement('li')
   let editBtn = document.createElement('button')
   editBtn.textContent = 'Edit'
   editBtn.onclick = () => {
-    editCareer(jobName)
+    editGoal(goalName)
   }
-  addNewCareer.innerHTML = `
-    ${jobName.job}
-    <button id="#delete-btn" onclick=deleteCareer(${jobName.id})>X</button>
+  addNewGoal.innerHTML = `
+    ${goalName.item}
+    <button id="#delete-btn" onclick=deleteGoal(${goalName.id})>X</button>
     `
-  addNewCareer.appendChild(editBtn)
-  careerListHolder.appendChild(addNewCareer)
+  addNewGoal.appendChild(editBtn)
+  goalListHolder.appendChild(addNewGoal)
 }
 
-const getCareersList = () => {
+const getGoalsList = () => {
   axios
-    .get('http://localhost:4000/api/career')
+    .get('http://localhost:4000/api/goal')
     .then(response => {
-      careerListHolder.textContent = ''
+      goalListHolder.textContent = ''
       console.log(response.data)
       for (let i = 0; i < response.data.length; i++) {
-        showCareerList(response.data[i])
+        showGoalsList(response.data[i])
       }
     })
     .catch(error => {
       console.log(error, 'Error')
     })
 }
-getCareersList()
+getGoalsList()
 
-const createNewCareer = e => {
+const createNewGoal = e => {
   e.preventDefault()
   let createNew = document.createElement('li')
-  createNew.textContent = careerInput.value
-  careerListHolder.appendChild(createNew)
+  createNew.textContent = goalInput.value
+  goalListHolder.appendChild(createNew)
   axios
-    .post('http://localhost:4000/api/makeCareer', { job: careerInput.value })
+    .post('http://localhost:4000/api/makeGoal', { item: goalInput.value })
     .then(response => {
-      careerInput.value = ''
-      getCareersList()
+      goalInput.value = ''
+      getGoalsList()
       console.log(response.data)
     })
     .catch(error => {
@@ -77,13 +77,13 @@ const createNewCareer = e => {
     })
 }
 
-careerForm.addEventListener('submit', createNewCareer)
+goalForm.addEventListener('submit', createNewGoal)
 
-const deleteCareer = id => {
+const deleteGoal = id => {
   axios
-    .delete(`http://localhost:4000/api/deleteCareer/${id}`)
+    .delete(`http://localhost:4000/api/deleteGoal/${id}`)
     .then(response => {
-      getCareersList()
+      getGoalsList()
       console.log(response.data)
     })
     .catch(error => {
@@ -91,17 +91,17 @@ const deleteCareer = id => {
     })
 }
 
-const editCareer = object => {
-  let editJob = prompt('Type in new career')
-  if (!editJob) {
-    editJob = object.job
+const editGoal = object => {
+  let editItem = prompt('Type in new goal')
+  if (!editItem) {
+    editItem = object.item
   }
   axios
-    .put(`http://localhost:4000/api/updateCareer/${object.id}`, {
-      jobName: editJob
+    .put(`http://localhost:4000/api/updateGoal/${object.id}`, {
+      goalName: editItem
     })
     .then(response => {
-      getCareersList()
+      getGoalsList()
       console.log(response.data)
     })
     .catch(error => {

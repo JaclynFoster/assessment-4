@@ -27,71 +27,71 @@ const getFortune = (req, res) => {
   res.status(200).send(randomFortune)
 }
 
-//Careers Section
+//Goals Section
 
-const careers = [
+const goals = [
   {
     id: 1,
-    job: 'Doctor'
+    item: 'Study Hard'
   },
   {
     id: 2,
-    job: 'Lawyer'
+    item: 'Try My Best'
   },
 
   {
     id: 3,
-    job: 'Astronaut'
+    item: 'Get Good Sleep'
   },
   {
     id: 4,
-    job: 'Software Engineer'
+    item: 'Do Not Sweat The Small Stuff'
   },
   {
     id: 5,
-    job: 'Veterinarian'
+    item: 'Trust In Myself'
   }
 ]
 
-let careerId = 6
+let goalId = 6
 
-const getCareers = (req, res) => {
-  res.status(200).send(careers)
+const getGoals = (req, res) => {
+  res.status(200).send(goals)
 }
 
-const makeCareer = (req, res) => {
-  const { job } = req.body
-  let newCareer = {
-    job,
-    id: careerId
+const makeGoal = (req, res) => {
+  const { item } = req.body
+  let newGoal = {
+    item,
+    id: goalId
   }
-  careers.push(newCareer)
-  res.status(200).send(careers)
-  careerId++
+  goals.push(newGoal)
+  res.status(200).send(goals)
+  goalId++
 }
 
-const deleteCareer = (req, res) => {
+const deleteGoal = (req, res) => {
   const { id } = req.params
-  let jobIndex = careers.findIndex(job => job.id === +id)
-  careers.splice(jobIndex, 1)
-  res.status(200).send(careers)
+  let goalIndex = goals.findIndex(item => item.id === +id)
+  goals.splice(goalIndex, 1)
+  res.status(200).send(goals)
 }
 
-const updateCareer = (req, res) => {
+const updateGoal = (req, res) => {
   const { id } = req.params
-  const { jobName } = req.body
-  console.log(id, jobName)
-  let jobIndex = careers.findIndex(job => job.id === +id)
-  console.log(jobIndex)
-  careers[jobIndex].job = jobName
-  res.status(200).send(careers)
+  const { goalName } = req.body
+  console.log(id, goalName)
+  let goalIndex = goals.findIndex(item => item.id === +id)
+  console.log(goalIndex)
+  goals[goalIndex].item = goalName
+  res.status(200).send(goals)
 }
 
 module.exports = {
   getCompliment,
   getFortune,
-  getCareers,
-  makeCareer,
-  deleteCareer,
-  updateCareer
+  getGoals,
+  makeGoal,
+  deleteGoal,
+  updateGoal
 }
